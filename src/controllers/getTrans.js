@@ -1,9 +1,9 @@
 import db from "../Database/index.js";
 
-const getUsers = (_req, res) => {
+const getUsers = (req, res) => {
   try {
-    const sql = 'SELECT * FROM transactions';
-    const params=[];
+    const sql = 'SELECT * FROM transactions where user=?';
+    const params=[req.params.user];
     db.all(sql,params, (err, rows) => {
       if (err) {
         console.error(err);

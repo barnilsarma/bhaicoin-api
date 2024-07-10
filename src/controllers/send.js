@@ -15,8 +15,8 @@ const send=(req,res)=>{
                     if(rows[0].balance>req.body.amount){
                         var current=crypto.randomBytes(20).toString('hex');
                         prevIdSender=rows[0].id;
-                        var query2=`insert into transactions(user,prev,curr,balance,amount,type) values(?,?,?,?,?,?)`;
-                        var params2=[req.body.sender,rows[0].curr,current,rows[0].balance-req.body.amount,req.body.amount,"Sent"];
+                        var query2=`insert into transactions(user,prev,curr,balance,amount,type,other) values(?,?,?,?,?,?,?)`;
+                        var params2=[req.body.sender,rows[0].curr,current,rows[0].balance-req.body.amount,req.body.amount,"Sent",req.body.recipient];
                         db.run(query2,params2,(err)=>{
                             if(err){
                                 res.status(403).send(err.message);
@@ -41,9 +41,9 @@ const send=(req,res)=>{
                                                 if(rows4.length>0){
                                                     prevTransRecipient=rows4[0].curr;
                                                     prevIdRecipient=rows4[0].id;
-                                                    var query5=`insert into transactions(user,prev,curr,balance,amount,type) values(?,?,?,?,?,?)`;
+                                                    var query5=`insert into transactions(user,prev,curr,balance,amount,type,other) values(?,?,?,?,?,?,?)`;
                                                     var currentRec=crypto.randomBytes(20).toString('hex');
-                                                    var params5=[req.body.recipient,prevTransRecipient,currentRec,rows4[0].balance+req.body.amount,req.body.amount,"Received"];
+                                                    var params5=[req.body.recipient,prevTransRecipient,currentRec,rows4[0].balance+req.body.amount,req.body.amount,"Received",req.body.sender];
                                                     db.run(query5,params5,(err)=>{
                                                         if(err){
                                                             res.status(407).send(err.message);

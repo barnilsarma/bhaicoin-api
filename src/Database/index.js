@@ -14,7 +14,8 @@ const db=new sqlite3.Database("db.sqlite",(err)=>{
         next TEXT DEFAULT NULL,
         balance REAL,
         amount REAL,
-        type TEXT
+        type TEXT,
+        other TEXT
       )`,(err)=>{
         if(err){
           console.log(err.message);
